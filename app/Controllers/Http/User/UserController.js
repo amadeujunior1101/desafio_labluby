@@ -94,9 +94,9 @@ class UserController {
           data: [],
         });
 
-      // await Token.create({
-      //   user_id: user_exist[0].id,
-      // });
+      await Token.create({
+        user_id: user_exist[0].id,
+      });
 
       return response.status(200).json({
         type: "success",
