@@ -1,24 +1,24 @@
 "use strict";
 
-const Seguindo = use("App/Models/Seguindo");
+const Follower = use("App/Models/Follower");
 
-class SeguindoController {
+class FollowerController {
 
   async show({ request, response }) {
     try {
       const { user_id } = request.get();
 
-      const seguindo = await Seguindo.query()
+      const follower = await Follower.query()
         .with("users")
-        .where("seguindo_user_id", user_id)
+        .where("follower_user_id", user_id)
         .fetch();
 
       return response.status(201).json({
         type: "success",
         status_code: 201,
-        message: "Successfully listed following.",
+        message: "Successfully listed follower.",
         user_message: "Seguidos listados com sucesso.",
-        data: seguindo,
+        data: follower,
       });
     } catch (error) {
       return response.status(200).json({
@@ -32,4 +32,4 @@ class SeguindoController {
   }
 }
 
-module.exports = SeguindoController;
+module.exports = FollowerController;

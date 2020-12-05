@@ -32,10 +32,10 @@ Route.group(() => {
     "RepositoryStar/RepositoryStarController.store"
   );
 
-  /**Resources following*/
-  Route.get("seguindo-show", "Seguindo/SeguindoController.show");
-
   /**Resources follower*/
-  Route.post("segue-create", "Segue/SegueController.store");
-  Route.get("segue-show", "Segue/SegueController.show");
+  Route.get("follower-show", "Follower/FollowerController.show");
+
+  /**Resources following*/
+  Route.post("following-create", "Following/FollowingController.store");
+  Route.get("following-show", "Following/FollowingController.show");
 });

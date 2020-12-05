@@ -1,21 +1,21 @@
 "use strict";
 
-const Segue = use("App/Models/Segue");
-const Seguindo = use("App/Models/Seguindo");
+const Following = use("App/Models/Following");
+const Follower = use("App/Models/Follower");
 
-class SegueController {
+class FollowingController {
   async store({ request, response }) {
     try {
-      const { user_id, segue_user_id } = request.all();
+      const { user_id, following_user_id } = request.all();
 
-      const segue = await Segue.create({
+      const following = await Following.create({
         user_id: user_id,
-        segue_user_id: segue_user_id,
+        following_user_id: following_user_id,
       });
 
-      await Seguindo.create({
-        user_id: segue_user_id,
-        seguindo_user_id: user_id,
+      await Follower.create({
+        user_id: following_user_id,
+        follower_user_id: user_id,
       });
 
       return response.status(201).json({
@@ -23,7 +23,7 @@ class SegueController {
         status_code: 201,
         message: "Follower successfully created",
         user_message: "Seguidor criado com sucesso",
-        data: segue,
+        data: following,
       });
     } catch (error) {
       return response.status(200).json({
@@ -40,9 +40,9 @@ class SegueController {
     try {
       const { user_id } = request.get();
 
-      const segue = await Segue.query()
+      const following = await Following.query()
         .with("users")
-        .where("segue_user_id", user_id)
+        .where("following_user_id", user_id)
         .fetch();
 
       return response.status(201).json({
@@ -50,7 +50,7 @@ class SegueController {
         status_code: 201,
         message: "Successfully listed follower.",
         user_message: "Seguidores listados com sucesso.",
-        data: segue,
+        data: following,
       });
     } catch (error) {
       return response.status(200).json({
@@ -64,4 +64,4 @@ class SegueController {
   }
 }
 
-module.exports = SegueController;
+module.exports = FollowingController;

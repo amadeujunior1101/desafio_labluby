@@ -9,13 +9,13 @@ class User extends Model {
   }
 
   // quem_me_segue
-  quem_me_segue() {
-    return this.hasMany("App/Models/Seguindo");
+  follower() {
+    return this.hasMany("App/Models/Follower");
   }
 
   // quem_eu_sigo
-  quem_eu_sigo() {
-    return this.hasMany("App/Models/Segue");
+  following() {
+    return this.hasMany("App/Models/Following");
   }
 }
 

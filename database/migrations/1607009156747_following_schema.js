@@ -3,15 +3,15 @@
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use("Schema");
 
-class SegueSchema extends Schema {
+class FollowingSchema extends Schema {
   up() {
-    this.create("segues", (table) => {
+    this.create("followings", (table) => {
       table.increments();
       // id do seguido
       table.integer("user_id").unsigned().references("id").inTable("users");
       // id do seguidor
       table
-        .integer("segue_user_id")
+        .integer("following_user_id")
         .unsigned()
         .references("id")
         .inTable("users");
@@ -20,8 +20,8 @@ class SegueSchema extends Schema {
   }
 
   down() {
-    this.drop("segues");
+    this.drop("followings");
   }
 }
 
-module.exports = SegueSchema;
+module.exports = FollowingSchema;

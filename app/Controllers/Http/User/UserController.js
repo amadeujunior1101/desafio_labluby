@@ -79,12 +79,12 @@ class UserController {
       const user = await User.query()
         .where("email", email)
         .with("repositories")
-        .with("quem_me_segue")
-        .with("quem_eu_sigo")
+        .with("follower") //Quem me segue
+        .with("following") //Quem eu sigo
         .fetch();
 
-      let user_exist = user.toJSON();
-
+      var user_exist = user.toJSON();
+      // return user_exist
       if (user_exist.length === 0)
         return response.status(200).json({
           type: "info",
@@ -94,20 +94,20 @@ class UserController {
           data: [],
         });
 
-      await Token.create({
-        user_id: user_exist[0].id,
-      });
+      // await Token.create({
+      //   user_id: user_exist[0].id,
+      // });
 
-      return response.status(201).json({
+      return response.status(200).json({
         type: "success",
-        status_code: 201,
+        status_code: 200,
         message: "User successfully listed.",
         user_message: "Usuário listado com sucesso.",
         data: {
-          user: user,
+          user: user_exist,
           countRepos: user_exist[0].repositories.length,
-          countSeguindo: user_exist[0].quem_eu_sigo.length,
-          countSegue: user_exist[0].quem_me_segue.length,
+          countSeguindo: user_exist[0].follower.length,
+          countSegue: user_exist[0].following.length,
         },
       });
     } catch (error) {
@@ -116,7 +116,7 @@ class UserController {
         status_code: 503,
         message: "exception found",
         user_message: "Desculpe-nos, houve um problema",
-        data: [],
+        data: { error: error.toString() },
       });
     }
   }
